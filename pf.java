@@ -49,6 +49,7 @@ public class pf extends JFrame {
 		contentPane.setLayout(null);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setFont(new Font("Microsoft JhengHei UI", textField.getFont().getStyle() | Font.BOLD, 28));
 		textField.setForeground(new Color(255, 255, 255));
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
@@ -103,7 +104,8 @@ public class pf extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		txtKyutes = new JTextField();
-		txtKyutes.setFont(new Font("Candara", txtKyutes.getFont().getStyle() | Font.BOLD, 24));
+		txtKyutes.setEditable(false);
+		txtKyutes.setFont(new Font("Adobe Garamond Pro", txtKyutes.getFont().getStyle() | Font.BOLD, 24));
 		txtKyutes.setText("KYUTES  ");
 		txtKyutes.setHorizontalAlignment(SwingConstants.RIGHT);
 		txtKyutes.setForeground(Color.WHITE);
