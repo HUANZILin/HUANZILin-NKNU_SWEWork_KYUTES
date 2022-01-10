@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
+import javax.swing.JButton;
 
 public class tI extends JFrame {
 
@@ -24,6 +25,7 @@ public class tI extends JFrame {
 	private JCheckBox checkBox_1;
 	private JCheckBox checkBox_2;
 	private JCheckBox checkBox_3;
+	private JButton btnNewButton;
 
 	/**
 	 * Launch the application.
@@ -57,35 +59,35 @@ public class tI extends JFrame {
 		checkBox_3.setFont(new Font("Microsoft JhengHei UI", checkBox_3.getFont().getStyle() | Font.BOLD, 20));
 		checkBox_3.setForeground(new Color(255, 184, 32));
 		checkBox_3.setBackground(Color.WHITE);
-		checkBox_3.setBounds(670, 387, 170, 39);
+		checkBox_3.setBounds(669, 358, 170, 39);
 		contentPane.add(checkBox_3);
 		
 		checkBox_2 = new JCheckBox("勾選以開始測驗");
 		checkBox_2.setFont(new Font("Microsoft JhengHei UI", checkBox_2.getFont().getStyle() | Font.BOLD, 20));
 		checkBox_2.setForeground(new Color(255, 184, 32));
 		checkBox_2.setBackground(Color.WHITE);
-		checkBox_2.setBounds(670, 336, 170, 39);
+		checkBox_2.setBounds(669, 307, 170, 39);
 		contentPane.add(checkBox_2);
 		
 		checkBox_1 = new JCheckBox("勾選以開始測驗");
 		checkBox_1.setFont(new Font("Microsoft JhengHei UI", checkBox_1.getFont().getStyle() | Font.BOLD, 20));
 		checkBox_1.setForeground(new Color(255, 184, 32));
 		checkBox_1.setBackground(Color.WHITE);
-		checkBox_1.setBounds(670, 285, 170, 39);
+		checkBox_1.setBounds(669, 256, 170, 39);
 		contentPane.add(checkBox_1);
 		
 		checkBox = new JCheckBox("勾選以開始測驗");
 		checkBox.setFont(new Font("Microsoft JhengHei UI", checkBox.getFont().getStyle() | Font.BOLD, 20));
 		checkBox.setForeground(new Color(255, 184, 32));
 		checkBox.setBackground(Color.WHITE);
-		checkBox.setBounds(670, 237, 170, 39);
+		checkBox.setBounds(669, 208, 170, 39);
 		contentPane.add(checkBox);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("勾選以開始測驗");
 		chckbxNewCheckBox.setForeground(new Color(255, 184, 32));
 		chckbxNewCheckBox.setFont(new Font("Microsoft JhengHei UI", chckbxNewCheckBox.getFont().getStyle() | Font.BOLD, 20));
 		chckbxNewCheckBox.setBackground(new Color(255, 255, 255));
-		chckbxNewCheckBox.setBounds(670, 186, 170, 39);
+		chckbxNewCheckBox.setBounds(669, 157, 170, 39);
 		contentPane.add(chckbxNewCheckBox);
 		
 		textField = new JTextField();
@@ -134,7 +136,14 @@ public class tI extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(85);
 		table.getColumnModel().getColumn(3).setPreferredWidth(85);
 		table.setToolTipText("");
-		table.setBounds(139, 131, 707, 300);
+		table.setBounds(138, 102, 707, 300);
 		contentPane.add(table);
+		
+		btnNewButton = new JButton("開始測驗");
+		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setFont(new Font("Microsoft JhengHei UI", btnNewButton.getFont().getStyle() | Font.BOLD, 24));
+		btnNewButton.setBackground(new Color(255, 184, 32));
+		btnNewButton.setBounds(416, 428, 154, 49);
+		contentPane.add(btnNewButton);
 	}
 }
