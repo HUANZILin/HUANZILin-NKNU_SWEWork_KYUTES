@@ -93,6 +93,7 @@ public class hpS {
 		frame.getContentPane().add(btnNewButton_2);
 		
 		textField = new JTextField();
+		textField.setEditable(false);
 		textField.setBounds(493, 505, 483, 48);
 		textField.setHorizontalAlignment(SwingConstants.CENTER);
 		textField.setFont(new Font("Microsoft JhengHei UI", textField.getFont().getStyle(), 18));
@@ -103,6 +104,7 @@ public class hpS {
 		textField.setColumns(12);
 		
 		textField_1 = new JTextField();
+		textField_1.setEditable(false);
 		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
 		textField_1.setBounds(493, 10, 483, 48);
 		textField_1.setForeground(new Color(255, 255, 255));
