@@ -13,12 +13,14 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.DropMode;
+import javax.swing.SwingConstants;
 
 public class questionDelete extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtEasy;
+	private JTextField txtA;
 	String subject;
 	String difficulty;
 	int quesCode;
@@ -28,22 +30,6 @@ public class questionDelete extends JFrame {
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
-
-	/**
-	 * Launch the application.
-	 */
-	public void start() {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					questionDelete frame = new questionDelete();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -56,15 +42,17 @@ public class questionDelete extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(149, 320, 100, 30);
-		contentPane.add(textField);
+		txtEasy = new JTextField();
+		txtEasy.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtEasy.setColumns(10);
+		txtEasy.setBounds(180, 320, 100, 30);
+		contentPane.add(txtEasy);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(420, 322, 100, 30);
-		contentPane.add(textField_1);
+		txtA = new JTextField();
+		txtA.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtA.setColumns(10);
+		txtA.setBounds(450, 320, 100, 30);
+		contentPane.add(txtA);
 		
 		JTextPane textPane_2 = new JTextPane();
 		textPane_2.setText("\u96E3\u6613\u5EA6\uFF1A");
@@ -109,6 +97,8 @@ public class questionDelete extends JFrame {
 		contentPane.add(btnNewButton_1);
 		
 		textField_2 = new JTextField();
+		textField_2.setHorizontalAlignment(SwingConstants.LEFT);
+		textField_2.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_2.setEditable(false);
 		textField_2.setBackground(new Color(255, 255, 255));
 		textField_2.setBounds(50, 10, 500, 135);
@@ -116,6 +106,7 @@ public class questionDelete extends JFrame {
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_3.setBackground(Color.WHITE);
 		textField_3.setEditable(false);
 		textField_3.setBounds(50, 165, 230, 60);
@@ -123,6 +114,7 @@ public class questionDelete extends JFrame {
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
+		textField_4.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_4.setBackground(Color.WHITE);
 		textField_4.setEditable(false);
 		textField_4.setColumns(10);
@@ -130,6 +122,7 @@ public class questionDelete extends JFrame {
 		contentPane.add(textField_4);
 		
 		textField_5 = new JTextField();
+		textField_5.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_5.setBackground(Color.WHITE);
 		textField_5.setEditable(false);
 		textField_5.setColumns(10);
@@ -137,6 +130,7 @@ public class questionDelete extends JFrame {
 		contentPane.add(textField_5);
 		
 		textField_6 = new JTextField();
+		textField_6.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_6.setBackground(new Color(255, 255, 255));
 		textField_6.setEditable(false);
 		textField_6.setColumns(10);
@@ -148,6 +142,7 @@ public class questionDelete extends JFrame {
 		this.subject = subject;
 		this.difficulty = difficulty;
 		this.quesCode = quesCode;
+		database = new QuesDataBase(subject, difficulty);
 	}
 	
 	public void runDelete() throws IOException {
@@ -155,18 +150,16 @@ public class questionDelete extends JFrame {
 	}
 	
 	public void showQuestion() {
-		database = new QuesDataBase(subject, difficulty);
 		try {
 			String[] question = database.getQuestion(quesCode);
-			textField.setText(difficulty);
-			textField_1.setText(question[5]);
+			txtEasy.setText(difficulty);
+			txtA.setText(question[5]);
 			textField_2.setText(question[0]);
 			textField_3.setText(question[1]);
 			textField_4.setText(question[2]);
 			textField_5.setText(question[3]);
 			textField_6.setText(question[4]);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

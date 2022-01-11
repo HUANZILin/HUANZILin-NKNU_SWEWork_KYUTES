@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -28,14 +27,13 @@ public class profileGUI extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public void start(User user) {
+	public void start(String account, String group) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					profileGUI frame = new profileGUI();
+					frame.getData(account, group);
 					frame.setVisible(true);
-					newUser = user;
-					getData();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -115,9 +113,9 @@ public class profileGUI extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					saveProfile();
+					newUser.saveProfile(textField.getText(), textField_1.getText(), textField_2.getText());
 				} catch(Exception error){
-					error.getStackTrace();
+					System.out.println("error");
 				}
 			}
 		});
@@ -126,28 +124,16 @@ public class profileGUI extends JFrame {
 		contentPane.add(btnNewButton);
 	}
 	
-	public void getData() {
+	public void getData(String account, String group){
+		try {
+			newUser = new User(group, account);
+		} catch (IOException e) {
+			System.out.println("error");
+		}
 		textField.setText(newUser.account);
 		textField_1.setText(newUser.password);
 		textField_2.setText(newUser.name);
 		textField_3.setText(newUser.group);
 	}
-	
-	public void saveProfile() throws IOException {
-		String filePath = "data/profile/" + newUser.group + File.separator + newUser.account + ".json";
-		File file = new File(filePath);
-		newUser.account = textField.getText();
-		newUser.password = textField_1.getText();
-		newUser.name = textField_2.getText();
-		newUser.group = textField_3.getText();
-		if(file.exists()) {
-			file.delete();
-			file.createNewFile();
-			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-			String write = newUser.toString();
-			System.out.println(write);
-			bw.close();
-		} else
-			System.out.println("error");
-	}
+		
 }

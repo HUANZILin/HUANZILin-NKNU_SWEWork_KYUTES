@@ -53,14 +53,12 @@ public class LoginGUI {
 	
 	public void toHomePageS() {
 		homePageStudent homepage = new homePageStudent();
-		homepage.start();
-		homepage.getUser(user);
+		homepage.start(user.account, user.group);
 	}
 	
 	public void toHomePageT() {
 		homePageTeacher homepage = new homePageTeacher();
-		homepage.start();
-		homepage.getUser(user);
+		homepage.start(user.account, user.group);
 	}
 
 	/**
@@ -135,6 +133,7 @@ public class LoginGUI {
 		
 		JButton btnNewButton_1 = new JButton("Login");
 		btnNewButton_1.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
 				String account = textField.getText();
 				String password = textField_1.getText();

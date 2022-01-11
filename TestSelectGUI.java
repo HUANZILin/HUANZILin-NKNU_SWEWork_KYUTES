@@ -32,19 +32,18 @@ public class TestSelectGUI extends JFrame {
 	String subject;
 	testProgress test;
 	private JTextField textField;
-	private JTable table;
-	Test test1;
 	private JTextField textField_1;
 	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void start() {
+	public void start(String subject) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					TestSelectGUI frame = new TestSelectGUI();
+					frame.getSubject(subject);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -116,12 +115,13 @@ public class TestSelectGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					test = new testProgress(subject,textField.getText());
-					test.startQuiz(textField_2.getText(), textField.getText());
-					test.getAccount(textField_1.getText());
+					test.startQuiz();
+					
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				dispose();
 			}
 		});
 		btnNewButton.setForeground(Color.BLACK);
@@ -130,8 +130,7 @@ public class TestSelectGUI extends JFrame {
 		contentPane.add(btnNewButton);
 	}
 	
-	public void getData(String subject) {
+	public void getSubject(String subject) {
 		this.subject = subject;
-		test1 = new Test(subject);
 	}
 }

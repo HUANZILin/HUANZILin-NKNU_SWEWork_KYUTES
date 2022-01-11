@@ -21,6 +21,7 @@ public class TestGUI extends JFrame {
 	private JTextField txtKyutes;
 	private JTextPane textPane;
 	private JTextField textField_1;
+	private JButton btnNewButton;
 
 
 	/**
@@ -66,20 +67,11 @@ public class TestGUI extends JFrame {
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("\u958B\u59CB\u8003\u8A66");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setFont(new Font("Microsoft JhengHei UI", btnNewButton.getFont().getStyle() | Font.BOLD, 24));
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(255, 184, 32));
-		btnNewButton.setBounds(423, 172, 139, 45);
-		contentPane.add(btnNewButton);
-		
 		JButton btnNewButton_1 = new JButton("\u67E5\u8A62\u6210\u7E3E");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				errorPage.start();
+				dispose();
 			}
 		});
 		btnNewButton_1.setFont(new Font("Microsoft JhengHei UI", btnNewButton_1.getFont().getStyle() | Font.BOLD, 24));
@@ -110,6 +102,20 @@ public class TestGUI extends JFrame {
 		textField_1.setColumns(10);
 		textField_1.setBounds(423, 129, 139, 33);
 		contentPane.add(textField_1);
+		
+		btnNewButton = new JButton("\u958B\u59CB\u8003\u8A66");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TestSelectGUI test = new TestSelectGUI();
+				test.start(textField_1.getText());
+				dispose();
+			}
+		});
+		btnNewButton.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 24));
+		btnNewButton.setForeground(Color.WHITE);
+		btnNewButton.setBackground(new Color(255, 184, 32));
+		btnNewButton.setBounds(423, 172, 139, 45);
+		contentPane.add(btnNewButton);
 	}
 
 }

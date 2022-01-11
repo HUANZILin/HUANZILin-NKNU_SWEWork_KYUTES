@@ -1,9 +1,12 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+
 import org.json.JSONObject;
 
 public class AccountManager {
 	
 	String filePath;
+	OutputStreamWriter osw;
 	
 	public AccountManager(){
 		
@@ -42,10 +45,11 @@ public class AccountManager {
 		String profilePath = filePath + "/" + account + ".json";
 		File profile = new File(profilePath);
 		profile.createNewFile();
-		OutputStream bw = new FileOutputStream(profile);
 		String writer = newUser.toString();
-		System.out.println(writer);
-		bw.close();
+		osw = new OutputStreamWriter(new FileOutputStream(profilePath), StandardCharsets.UTF_8);
+		osw.write(writer);
+        osw.flush();
+        osw.close();
 	}
 	
 	public void accountCreate(String account, String password, String group) throws IOException {
@@ -58,9 +62,10 @@ public class AccountManager {
 		newUser.put("password", password);
 		newUser.put("group", group);
 		newUser.put("admin", false);
-		BufferedWriter bw = new BufferedWriter(new FileWriter(profile));
 		String writer = newUser.toString();
-		System.out.println(writer);
-		bw.close();
+		osw = new OutputStreamWriter(new FileOutputStream(profilePath), StandardCharsets.UTF_8);
+		osw.write(writer);
+        osw.flush();
+        osw.close();
 	}
 }

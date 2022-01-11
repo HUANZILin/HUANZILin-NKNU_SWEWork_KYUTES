@@ -24,6 +24,7 @@ public class questionManage extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
+	private JButton btnNewButton_2;
 
 	/**
 	 * Launch the application.
@@ -115,7 +116,8 @@ public class questionManage extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String subject = textField_1.getText();
-				runAdd(subject);
+				String difficulty = textField_2.getText();
+				runAdd(subject, difficulty);
 			}
 		});
 		btnNewButton.setFont(new Font("微軟正黑體", Font.BOLD, 20));
@@ -126,30 +128,61 @@ public class questionManage extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String subject = textField_1.getText();
-				String difficulity = textField_2.getText();
+				String difficulty = textField_2.getText();
 				String number = textField_3.getText();
-				runDelete(subject, difficulity, number);
+				runDelete(subject, difficulty, toInt(number));
 			}
 		});
 		btnNewButton_1.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		btnNewButton_1.setBounds(525, 450, 123, 48);
 		contentPane.add(btnNewButton_1);
+		
+		btnNewButton_2 = new JButton("\u56DE\u9996\u9801");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnNewButton_2.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		btnNewButton_2.setBounds(38, 70, 149, 36);
+		contentPane.add(btnNewButton_2);
 	}
 	
-	public void runAdd(String subject) {
-		questionAdd add = new questionAdd();
-		add.setSubject(subject);
+	public void runAdd(String subject, String difficulty) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					questionAdd frame = new questionAdd();
+					frame.setData(subject, difficulty);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
-	public void runDelete(String subject, String difficulity, String number) {
-		int num = 0;
+	public int toInt(String number) {
+		int result = 0;
 		for(int i = 0; i < number.length(); i++) {
-			num *= 10;
-			num += (number.charAt(i) - 48);
+			result *= 0;
+			result += (number.charAt(i) - 48);
 		}
-		questionDelete deletePage = new questionDelete();
-		deletePage.start();
-		deletePage.setData(subject, difficulity, num);
-		deletePage.showQuestion();
+		return result;
+	}
+	
+	public void runDelete(String subject, String difficulty, int number) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					questionDelete frame = new questionDelete();
+					frame.setVisible(true);
+					frame.setData(subject, difficulty, number);
+					frame.showQuestion();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

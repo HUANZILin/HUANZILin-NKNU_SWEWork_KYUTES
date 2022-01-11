@@ -157,6 +157,7 @@ public class testCreateGUI extends JFrame {
 				} catch (Exception e1) {
 					textPane_5.setText("error");
 				}
+				dispose();
 			}
 		});
 		btnNewButton.setFont(new Font("·L³n¥¿¶ÂÅé", Font.BOLD, 25));

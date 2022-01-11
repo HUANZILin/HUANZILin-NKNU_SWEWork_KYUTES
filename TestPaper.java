@@ -1,103 +1,91 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class TestPaper {
 
 	String testTitle;
 	String subject;
-	String filePath;
+	String testPath;
+	String ansPath;
+	String answer;
+	String [] question = new String [6];
 	QuesDataBase databaseEasy;
 	QuesDataBase databaseNormal;
 	QuesDataBase databaseDiff;
+	OutputStreamWriter osw;
 	
-	public TestPaper(String subject) {
+	public TestPaper(String subject, String title) {
 		this.subject = subject;
 		this.databaseEasy = new QuesDataBase(subject,"easy");
 		this.databaseNormal = new QuesDataBase(subject,"normal");
 		this.databaseDiff = new QuesDataBase(subject,"diff");
-		filePath = "data/testPaper/" + subject;
+		testPath = "data/testPaper/" + subject + "/question/" + testTitle + ".txt";
+		ansPath = "data/testPaper" + subject + "/answer/" + testTitle + ".txt";
 	}
 	
-	public String create(String testTitle, int easy, int normal, int diff) throws IOException {
-		String quizPath = filePath +  "/question/" + testTitle + ".txt";
-		String answerPath = filePath +  "/answer/" + testTitle + ".txt";
-		String answer = "";
-		answer = answer + getEasy(quizPath, easy);
-		answer = answer + getNormal(quizPath, normal);
-		answer = answer + getDiff(quizPath, diff);
-		storeAnswer(answer, answerPath);
-		return quizPath;
+	public TestPaper(String subject, String testPath, String ansPath) {
+		this.subject = subject;
+		this.databaseEasy = new QuesDataBase(subject,"easy");
+		this.databaseNormal = new QuesDataBase(subject,"normal");
+		this.databaseDiff = new QuesDataBase(subject,"diff");
+		this.testPath = testPath;
+		this.ansPath = ansPath;
 	}
 	
-	public void create(int quesNum, int easy, int normal, int diff) throws IOException {
-		String practicePath = "data/Temp/TempTest.txt";
-		String answer = "";
-		answer = answer + getEasy(practicePath, easy);
-		answer = answer + getNormal(practicePath, normal);
-		answer = answer + getDiff(practicePath, diff);
-		storeAnswer(answer, "data/Temp/TempAns.txt");
+	public void create(int easy, int normal, int diff) throws IOException {
+		answer = "";
+		File file = new File(testPath);
+		file.createNewFile();
+		osw = new OutputStreamWriter(new FileOutputStream(testPath), StandardCharsets.UTF_8);
+		getEasy(easy);
+		getNormal(normal);
+		getDiff(diff);
+		osw.flush();
+		osw.close();
+		storeAnswer();
 	}
 	
-	public String getEasy(String path, int number) throws IOException {
-		String answer = "";
-		String [] question = new String [6];
+	public void getEasy(int number) throws IOException {
 		int [] questionNumber = databaseEasy.getRandomNumber(number);
-		BufferedWriter write = new BufferedWriter(new FileWriter(path));
+		String loader;
 		for(Integer n : questionNumber) {
 			question = databaseEasy.getQuestion(n);
-			System.out.println(question[0]);
-			System.out.println(question[1]);
-			System.out.println(question[2]);
-			System.out.println(question[3]);
-			System.out.println(question[4]);
+			loader = question[0] + "," + question[1] + "," + question[2] + "," + question[3] + "," + question[4] + "\n";
+			osw.write(loader);
 			answer = answer + question[5];
 		}
-		write.close();
-		return answer;
 	}
 	
-	public String getNormal(String path, int number) throws IOException {
-		String answer = "";
-		String [] question = new String [6];
+	public void getNormal(int number) throws IOException {
 		int [] questionNumber = databaseEasy.getRandomNumber(number);
-		BufferedWriter write = new BufferedWriter(new FileWriter(path));
+		String loader;
 		for(Integer n : questionNumber) {
 			question = databaseEasy.getQuestion(n);
-			System.out.println(question[0]);
-			System.out.println(question[1]);
-			System.out.println(question[2]);
-			System.out.println(question[3]);
-			System.out.println(question[4]);
+			loader = question[0] + "," + question[1] + "," + question[2] + "," + question[3] + "," + question[4] + "\n";
+			osw.write(loader);
 			answer = answer + question[5];
 		}
-		write.close();
-		return answer;
 	}
 	
-	public String getDiff(String path, int number) throws IOException {
-		String answer = "";
-		String [] question = new String [6];
+	public void getDiff(int number) throws IOException {
 		int [] questionNumber = databaseDiff.getRandomNumber(number);
-		BufferedWriter write = new BufferedWriter(new FileWriter(path));
+		String loader;
 		for(Integer n : questionNumber) {
 			question = databaseEasy.getQuestion(n);
-			System.out.println(question[0]);
-			System.out.println(question[1]);
-			System.out.println(question[2]);
-			System.out.println(question[3]);
-			System.out.println(question[4]);
+			loader = question[0] + "," + question[1] + "," + question[2] + "," + question[3] + "," + question[4] + "\n";
+			osw.write(loader);
 			answer = answer + question[5];
 		}
-		write.close();
-		return answer;
 	}
 			
-	public void storeAnswer(String answer, String path) {
+	public void storeAnswer() {
 		try {
-			File ansFile = new File(path);
+			File ansFile = new File(ansPath);
 			ansFile.createNewFile();
-			BufferedWriter writer = new BufferedWriter(new FileWriter(path));
-			System.out.println(answer);
-			writer.close();
+			osw = new OutputStreamWriter(new FileOutputStream(ansPath), StandardCharsets.UTF_8);
+			osw.write(answer);
+			osw.flush();
+			osw.close();
 		}
 		catch (IOException e) {
 			e.printStackTrace();

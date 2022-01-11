@@ -17,26 +17,11 @@ import java.awt.SystemColor;
 public class questionAdd extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtEasy;
+	private JTextField txtA;
 	QuesDataBase database;
 	String subject;
-	private JTextField textField_1;
-
-	/**
-	 * Launch the application.
-	 */
-	public void start(String subject) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					questionAdd frame = new questionAdd();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	String difficulty;
 
 	/**
 	 * Create the frame.
@@ -74,10 +59,11 @@ public class questionAdd extends JFrame {
 		textPane_1_3.setFont(new Font("微軟正黑體", Font.BOLD, 18));
 		contentPane.add(textPane_1_3);
 		
-		textField = new JTextField();
-		textField.setBounds(140, 322, 100, 30);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtEasy = new JTextField();
+		txtEasy.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtEasy.setBounds(180, 320, 100, 30);
+		contentPane.add(txtEasy);
+		txtEasy.setColumns(10);
 		
 		JTextPane textPane_2 = new JTextPane();
 		textPane_2.setBounds(50, 320, 100, 30);
@@ -95,6 +81,12 @@ public class questionAdd extends JFrame {
 		textPane_2_1.setBackground(SystemColor.menu);
 		contentPane.add(textPane_2_1);
 		
+		txtA = new JTextField();
+		txtA.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtA.setBounds(462, 322, 88, 30);
+		txtA.setColumns(10);
+		contentPane.add(txtA);
+		
 		JButton btnNewButton = new JButton("\u78BA\u8A8D\u65B0\u589E");
 		btnNewButton.setBounds(185, 370, 230, 30);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -104,9 +96,7 @@ public class questionAdd extends JFrame {
 				String ans2 = textPane_1_1.getText();
 				String ans3 = textPane_1_2.getText();
 				String ans4 = textPane_1_3.getText();
-				String difficulity = textPane_2.getText();
-				char answer = textPane_2_1.getText().charAt(0);
-				database = new QuesDataBase(subject, difficulity);
+				char answer = txtA.getText().charAt(0);
 				try {
 					database.add(question, ans1, ans2, ans3, ans4, answer);
 				} catch (IOException e1) {
@@ -118,14 +108,12 @@ public class questionAdd extends JFrame {
 		});
 		btnNewButton.setFont(new Font("微軟正黑體", Font.BOLD, 18));
 		contentPane.add(btnNewButton);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(410, 322, 100, 30);
-		textField_1.setColumns(10);
-		contentPane.add(textField_1);
 	}
 	
-	public void setSubject(String subject) {
+	public void setData(String subject, String difficulty) {
 		this.subject = subject;
+		this.difficulty = difficulty;
+		database = new QuesDataBase(subject, difficulty);
+		txtEasy.setText(difficulty);
 	}
 }

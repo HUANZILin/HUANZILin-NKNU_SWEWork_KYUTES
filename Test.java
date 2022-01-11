@@ -1,39 +1,31 @@
-import org.json.JSONObject;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class Test {
 
 	String subject;
 	String filePath;
-	JSONObject test = new JSONObject();
 	
 	public Test (String subject){
 		this.subject = subject;
-		filePath = "data/test/" + subject + File.pathSeparator;
 	}
 	
 	public void createQuiz(int timeLimit, String title, int easy, int normal, int diff) throws IOException {
-		String path = filePath + title + ".json";
-		File testPaper = new File(path);
-		int number = easy + normal + diff;
-		test.put("title", title);
-		test.put("time limit", timeLimit);
-		test.put("question number", number);
-		TestPaper paper = new TestPaper(subject);
-		String testPath = paper.create(title, easy, normal, diff);
-		test.put("test path", testPath);
-		testPaper.createNewFile();
-		BufferedWriter bw = new BufferedWriter(new FileWriter(path));
-		String testFile = test.toString();
-		System.out.println(testFile);
-		bw.close();
-		test = null;
+		filePath = "data/test/" + subject + "/" + title + ".txt";
+		String quesPath = "data/testPaper/" + subject + "/question/" + title + ".txt";
+		String ansPath = "data/testPaper/" + subject + "/answer/" + title + ".txt";
+		int total = easy + normal + diff;
+		TestPaper paper = new TestPaper(subject, title);
+		paper.create(easy, normal, diff);
+		File test = new File(filePath);
+		test.createNewFile();
+		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath), StandardCharsets.UTF_8);
+		osw.write(title + "\n");
+		osw.write(timeLimit + "\n");
+		osw.write(quesPath + "\n");
+		osw.write(ansPath + "\n");
+		osw.write(total + "\n");
+		osw.flush();
+		osw.close();
 	}
-	
-	public File[] getList() {
-		File file = new File(filePath);
-		File[] list = file.listFiles();
-		return list;
-	}
-	
 }

@@ -5,13 +5,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JDesktopPane;
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JCheckBox;
-import javax.swing.DropMode;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
 import java.awt.Color;
@@ -22,10 +19,10 @@ import java.awt.event.ActionEvent;
 public class accountGUI extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private JTextField txtClass;
 	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
+	private JTextField txtAdmin;
+	private JTextField txtAdmin_1;
 	AccountManager am = new AccountManager();
 
 	/**
@@ -55,13 +52,15 @@ public class accountGUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("微軟正黑體", Font.BOLD, 20));
-		textField.setBounds(130, 90, 310, 40);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		txtClass = new JTextField();
+		txtClass.setText("class01");
+		txtClass.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtClass.setBounds(130, 90, 310, 40);
+		contentPane.add(txtClass);
+		txtClass.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.setText("10");
 		textField_2.setFont(new Font("微軟正黑體", Font.BOLD, 20));
 		textField_2.setColumns(10);
 		textField_2.setBounds(130, 160, 310, 40);
@@ -70,8 +69,8 @@ public class accountGUI extends JFrame {
 		JButton btnNewButton = new JButton("\u5275\u5EFA\u7FA4\u7D44");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String group = textField_3.getText();
-				String number = textField_4.getText();
+				String group = txtAdmin.getText();
+				String number = txtAdmin_1.getText();
 				int amount = 0;
 				for(int i = 0; i < number.length(); i++) {
 					amount *= 10;
@@ -83,6 +82,7 @@ public class accountGUI extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				reLogin.start();
 			}
 		});
 		btnNewButton.setFont(new Font("微軟正黑體", Font.BOLD, 20));
@@ -93,17 +93,17 @@ public class accountGUI extends JFrame {
 		textPane.setBounds(10, 260, 480, 10);
 		contentPane.add(textPane);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("微軟正黑體", Font.BOLD, 20));
-		textField_3.setColumns(10);
-		textField_3.setBounds(130, 360, 310, 40);
-		contentPane.add(textField_3);
+		txtAdmin = new JTextField();
+		txtAdmin.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtAdmin.setColumns(10);
+		txtAdmin.setBounds(130, 360, 310, 40);
+		contentPane.add(txtAdmin);
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("微軟正黑體", Font.BOLD, 20));
-		textField_4.setColumns(10);
-		textField_4.setBounds(130, 430, 310, 40);
-		contentPane.add(textField_4);
+		txtAdmin_1 = new JTextField();
+		txtAdmin_1.setFont(new Font("微軟正黑體", Font.BOLD, 20));
+		txtAdmin_1.setColumns(10);
+		txtAdmin_1.setBounds(130, 430, 310, 40);
+		contentPane.add(txtAdmin_1);
 		
 		JCheckBox chckbxNewCheckBox = new JCheckBox("\u7BA1\u7406\u6B0A\u9650");
 		chckbxNewCheckBox.setFont(new Font("微軟正黑體", Font.BOLD, 20));
@@ -114,8 +114,8 @@ public class accountGUI extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean type = chckbxNewCheckBox.isSelected();
-				String account = textField_3.getText();
-				String password = textField_4.getText();
+				String account = txtAdmin.getText();
+				String password = txtAdmin_1.getText();
 				try {
 					am.createAccountSingle(account, password, type);
 				} catch (IOException e1) {

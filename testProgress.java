@@ -1,58 +1,42 @@
 import java.io.*;
-import org.json.JSONObject;
+import java.util.Scanner;
 
 public class testProgress {
 
-	JSONObject testData;
 	String subject;
 	String title;
 	String testPath;
-	String account;
+	String ansPath;
 	int timeLimit;
-	int questionTotal;
-	int questionNow;
+	int total;
+	Scanner scan;
 	
 	testProgress(String subject, String title) throws IOException {
 		this.subject = subject;
 		this.title = title;
-		testPath = "data/test/" + subject + File.pathSeparator + title + ".json";
-		BufferedReader test = new BufferedReader(new FileReader(testPath));
-		String reader = test.readLine();
-		testData = new JSONObject(reader);
-		test.close();
+		testPath = "data/test/" + subject + "/" + title + ".txt";
+		File file = new File(testPath);
+		scan = new Scanner(file);
+		scan.nextLine();
+		timeLimit = toInt(scan.nextLine());
+		testPath = scan.nextLine();
+		ansPath = scan.nextLine();
+		total = toInt(scan.nextLine());
+		scan.close();
 	}
 	
-	testProgress(String subject) throws IOException{
-		testPath = "data/Temp/TempTest.txt";
-		TestPaper test = new TestPaper(subject);
-		test.create(15, 5, 5, 5);
-	}
-	
-	public void startQuiz(String group, String userName) {
-		timeLimit = testData.getInt("time limit");
-		questionTotal = testData.getInt("question number");
-		String path = testData.getString("test path");
+	public void startQuiz() {
 		TestStartGUI test = new TestStartGUI();
-		try {
-			test.getTest(questionTotal, path);
-		} catch(Exception e) {
-			e.getStackTrace();
-		}
-		test.start();
-		test.getData(subject, account, title);
+		test.start(total, testPath, ansPath);
+		
 	}
 	
-	public void startPractice(String userName) {
-		TestStartGUI test = new TestStartGUI();
-		try {
-			test.getTest(15, testPath);
-		} catch(Exception e) {
-			e.getStackTrace();
+	public int toInt(String number) {
+		int result = 0;
+		for(int i = 0; i < number.length(); i++) {
+			result *= 10;
+			result += (number.charAt(i) - 48);
 		}
-		test.start();
-	}
-	
-	public void getAccount(String account) {
-		this.account = account;
+		return result;
 	}
 }

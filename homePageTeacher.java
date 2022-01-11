@@ -10,6 +10,9 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ContainerAdapter;
+import java.io.IOException;
+import javax.swing.JLabel;
+import javax.swing.ImageIcon;
 
 public class homePageTeacher {
 
@@ -21,11 +24,12 @@ public class homePageTeacher {
 	/**
 	 * Launch the application.
 	 */
-	public void start() {
+	public void start(String account, String group) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					homePageTeacher window = new homePageTeacher();
+					window.getUser(account, group);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,10 +44,6 @@ public class homePageTeacher {
 	public homePageTeacher() {
 		initialize();
 	}
-	
-	public void getUser(User newUser) {
-		user = newUser;
-	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -54,7 +54,7 @@ public class homePageTeacher {
 		});
 		frame.getContentPane().setForeground(new Color(255, 255, 255));
 		frame.getContentPane().setBackground(new Color(255, 255, 255));
-		frame.setBounds(100, 100, 1000, 600);
+		frame.setBounds(300, 100, 1000, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -71,7 +71,7 @@ public class homePageTeacher {
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("帳號管理");
-		btnNewButton_1.setBounds(493, 191, 483, 59);
+		btnNewButton_1.setBounds(493, 157, 483, 59);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				accountGUI.start();
@@ -113,24 +113,50 @@ public class homePageTeacher {
 		button.setFont(new Font("Microsoft JhengHei UI", button.getFont().getStyle() | Font.BOLD, 28));
 		button.setForeground(Color.WHITE);
 		button.setBackground(new Color(255, 184, 32));
-		button.setBounds(493, 314, 483, 59);
+		button.setBounds(493, 348, 483, 59);
 		frame.getContentPane().add(button);
 		
 		JButton button_1 = new JButton("測驗管理");
-		button_1.setFont(new Font("Microsoft JhengHei UI", button_1.getFont().getStyle() | Font.BOLD, 28));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				testCreateGUI.start();
+				errorPage.start();
 			}
 		});
+		button_1.setFont(new Font("Microsoft JhengHei UI", button_1.getFont().getStyle() | Font.BOLD, 28));
 		button_1.setForeground(Color.WHITE);
 		button_1.setBackground(new Color(255, 184, 32));
 		button_1.setBounds(493, 436, 483, 59);
 		frame.getContentPane().add(button_1);
+		
+		JButton btnNewButton_2 = new JButton("\u6E2C\u9A57\u8A2D\u5B9A");
+		btnNewButton_2.setFont(new Font("Microsoft JhengHei UI", btnNewButton_2.getFont().getStyle() | Font.BOLD, 28));
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				testCreateGUI.start();
+			}
+		});
+		btnNewButton_2.setBounds(493, 254, 483, 59);
+		btnNewButton_2.setBackground(new Color(255, 184, 32));
+		btnNewButton_2.setForeground(new Color(255, 255, 255));
+		frame.getContentPane().add(btnNewButton_2);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("D:\\eclipse-java workspace\\KYUTES_system\\imgs\\kyutes_home.png"));
+		lblNewLabel.setBounds(0, 0, 483, 563);
+		frame.getContentPane().add(lblNewLabel);
 	}
 	
 	public void toProfile() {
 		profileGUI profile = new profileGUI();
-		profile.start(user);
+		profile.start(user.account, user.group);
+	}
+
+	public void getUser(String account, String group) {
+		try {
+			user = new User(group, account);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 import org.json.JSONObject;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 public class User {
 	
@@ -9,15 +10,14 @@ public class User {
 	String group;
 	boolean admin;
 	
-	String read = null;
-	String write = null;
+	OutputStreamWriter osw;
 	String profilePath;
 	JSONObject user;
 	
 	public User(String group, String account) throws IOException {
-		profilePath = "data/profile/" + group + File.separator + account + ".json";
+		profilePath = "data/profile/" + group + "/" + account + ".json";
 		BufferedReader br = new BufferedReader(new FileReader(profilePath));
-		read = br.readLine();
+		String read = br.readLine();
 		user = new JSONObject(read);
 		getData(user);
 		br.close();
@@ -26,43 +26,29 @@ public class User {
 	public void getData(JSONObject profile) {
 		this.name = user.getString("name");
 		this.account = user.getString("account");
-		this.password = user.getString("passowrd");
+		this.password = user.getString("password");
 		this.group = user.getString("group");
 		this.admin = user.getBoolean("admin");
 	}
 	
-	public void changeName(String newName) {
-		this.name = newName;
-	}
-	
-	public boolean changePassword(String oldPassword, String newPassword) {
-		if(password.equals(oldPassword)) {
-			password = newPassword;
-			return true;
-		}
-		else
-			return false;
-	}
-	public void changeGroup(String group) {
-		this.group = group;
-		File oldFile = new File(profilePath);
-		this.profilePath = "data/profile/" + group + File.separator + account + ".json";
-		File newFile = new File(profilePath);
-		oldFile.renameTo(newFile);
-	}
-	
-	public boolean saveProfile() throws IOException {
-		File profile = new File(profilePath);
-		if(profile.exists()) {
-			profile.delete();
-			profile.createNewFile();
-			BufferedWriter bw = new BufferedWriter(new FileWriter(profilePath));
-			write = user.toString();
-			System.out.println(write);
-			bw.close();
-			return true;
-		} else
-			return false; 
+	public void saveProfile(String newAccount, String newPassword, String newName) throws IOException {
+		JSONObject newUser = new JSONObject();
+		File file = new File(profilePath);
+		file.delete();
+		profilePath = "data/profile/" + group + "/" + newAccount + ".json";
+		file = new File(profilePath);
+		file.createNewFile();
+		newUser.put("name", newName);
+		newUser.put("account", newAccount);
+		newUser.put("password", newPassword);
+		newUser.put("group", group);
+		newUser.put("admin", admin);
+		String writer = newUser.toString();
+		osw = new OutputStreamWriter(new FileOutputStream(profilePath), StandardCharsets.UTF_8);
+		osw.write(writer);
+        osw.flush();
+        osw.close();
+		
 	}
 	
 	public boolean login(String password) {
